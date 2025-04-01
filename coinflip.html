@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Flip</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 50px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .coin {
+            width: 120px;
+            height: 120px;
+            line-height: 120px;
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 50%;
+            background: gold;
+            color: black;
+            border: 3px solid white;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.6s ease-in-out;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .flip {
+            transform: rotateY(1800deg);
+        }
+        button {
+            font-size: 18px;
+            padding: 12px 24px;
+            cursor: pointer;
+            background: #ffcc00;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #ffdb4d;
+        }
+        input, select {
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Flip a Coin</h1>
+        <input type="text" id="player1Name" placeholder="Enter Player 1 name" />
+        <select id="player1Choice">
+            <option value="Heads">Heads</option>
+            <option value="Tails">Tails</option>
+        </select>
+        <br>
+        <input type="text" id="player2Name" placeholder="Enter Player 2 name" />
+        <select id="player2Choice">
+            <option value="Heads">Heads</option>
+            <option value="Tails">Tails</option>
+        </select>
+        <div class="coin" id="coin">Heads</div>
+        <button onclick="flipCoin()">Flip</button>
+        <p id="resultMessage"></p>
+    </div>
+    <script>
+        function flipCoin() {
+            let coin = document.getElementById("coin");
+            let player1Name = document.getElementById("player1Name").value;
+            let player1Choice = document.getElementById("player1Choice").value;
+            let player2Name = document.getElementById("player2Name").value;
+            let player2Choice = document.getElementById("player2Choice").value;
+            let resultMessage = document.getElementById("resultMessage");
+
+            if (!player1Name || !player2Name) {
+                resultMessage.textContent = "Both players must enter their names before flipping.";
+                return;
+            }
+
+            coin.classList.add("flip");
+
+            setTimeout(() => {
+                let result = Math.random() < 0.5 ? "Heads" : "Tails";
+                coin.textContent = result;
+                coin.classList.remove("flip");
+
+                let message = `The coin landed on ${result}.`;
+                if (result === player1Choice && result === player2Choice) {
+                    message += ` Both ${player1Name} and ${player2Name} guessed correctly!`;
+                } else if (result === player1Choice) {
+                    message += ` ${player1Name} guessed correctly!`;
+                } else if (result === player2Choice) {
+                    message += ` ${player2Name} guessed correctly!`;
+                } else {
+                    message += ` Neither player guessed correctly.`;
+                }
+
+                resultMessage.textContent = message;
+            }, 600);
+        }
+    </script>
+</body>
+</html>
+
+
